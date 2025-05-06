@@ -1,6 +1,6 @@
 #include "jacobian_ops.h"
 
-void compute_edge_residual_se2(const VertexSE2* from, const VertexSE2* to, const EdgeSE2* edge, float residual[3]) {
+void compute_edge_residual_se2(const VertexSE2* from, const VertexSE2* to, EdgeSE2* edge, float residual[3]) {
     float dx = to->x - from->x;
     float dy = to->y - from->y;
     float dtheta = to->theta - from->theta;
@@ -18,6 +18,10 @@ void compute_edge_residual_se2(const VertexSE2* from, const VertexSE2* to, const
     // Normalize angle
     while (residual[2] > M_PI) residual[2] -= 2.0f * M_PI;
     while (residual[2] < -M_PI) residual[2] += 2.0f * M_PI;
+
+    edge->error[0] = residual[0];
+    edge->error[1] = residual[1];
+    edge->error[2] = residual[2];
 }
 
 void compute_edge_jacobians_se2(const VertexSE2* from, const VertexSE2* to, const EdgeSE2* edge, float J_from[3][3], float J_to[3][3]) {

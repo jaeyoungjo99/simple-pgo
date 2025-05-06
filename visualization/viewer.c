@@ -1,9 +1,10 @@
 #include <GL/glut.h>
+#include <GL/freeglut_ext.h> 
 #include <stdlib.h>  // for exit()
 #include "viewer.h"
 
 static SimpleGraph* g_graph = NULL;
-static float zoom_factor = 1.0f;
+static float zoom_factor = 10.0f;
 static float pan_x = 0.0f, pan_y = 0.0f;
 static int is_dragging = 0;
 static int last_x, last_y;
@@ -66,10 +67,10 @@ void reshape_callback(int width, int height) {
 
 // 🖱 마우스 클릭 시 프로그램 종료
 void mouse_callback(int button, int state, int x, int y) {
-    // if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-    //     printf("Mouse clicked — leaving main loop...\n");
-    //     glutLeaveMainLoop();  // 메인 루프 탈출
-    // }
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        printf("Mouse clicked — leaving main loop...\n");
+        glutLeaveMainLoop();  // 메인 루프 탈출
+    }
     if (button == GLUT_LEFT_BUTTON) {
         if (state == GLUT_DOWN) {
             is_dragging = 1;
@@ -126,5 +127,8 @@ void launch_viewer(SimpleGraph* graph) {
     glutMouseFunc(mouse_callback);  // 👈 클릭 핸들러 등록
     glutReshapeFunc(reshape_callback); // 화면 크기 변경 및 zoom 처리
 
+    glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
+
     glutMainLoop();
+
 }

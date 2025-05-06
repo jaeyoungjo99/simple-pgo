@@ -8,6 +8,7 @@ typedef struct {
     int to;
     float measurement[3];   // [dx, dy, dtheta]
     float information[3][3];
+    float error[3];
 } EdgeSE2;
 
 

@@ -12,49 +12,29 @@ SimpleGraph *CreateGraph()
 
     g->optimizer_type = OPTIMIZER_GAUSS_NEWTON;
     g->solver_type = SOLVER_DENSE;
+    g->robust_kernel_type = ROBUST_KERNEL_NONE;
 
-    g->lambda = 10.0f; // Default damping factor for Levenberg-Marquardt
+    g->lambda = 1.0f; // Default damping factor for Levenberg-Marquardt
+    g->loss_threshold = 5.0f; // Default loss threshold for robust loss function
 
     g->setOptimizer = set_optimizer;
     g->setSolver = set_solver;
+    g->setRobustKernel = set_robust_kernel;
     g->addVertex2D = add_vertex_se2;
     g->addEdge2D = add_edge_se2;
     return g;
 }
 
-static void set_optimizer(SimpleGraph* g, OptimizerType type)
-{
-    // Optimizer 설정
-    switch (type) {
-        case OPTIMIZER_GAUSS_NEWTON:
-            g->optimizer_type = OPTIMIZER_GAUSS_NEWTON;
-            break;
-        case OPTIMIZER_LEVENBERG_MARQUARDT:
-            g->optimizer_type = OPTIMIZER_LEVENBERG_MARQUARDT;
-            break;
-        default:
-            g->optimizer_type = OPTIMIZER_GAUSS_NEWTON;
-            break;
-    }
+static void set_optimizer(SimpleGraph* g, OptimizerType type){
+    g->optimizer_type = type;
 }
 
-static void set_solver(SimpleGraph* g, SolverType type)
-{
-    // Solver 설정
-    switch (type) {
-        case SOLVER_DENSE:
-            // Dense solver 설정
-            g->solver_type = SOLVER_DENSE;
-            break;
-        case SOLVER_SPARSE:
-            // Sparse solver 설정
-            g->solver_type = SOLVER_SPARSE;
-            break;
-        default:
-            // 잘못된 solver
-            g->solver_type = SOLVER_DENSE;
-            break;
-    }
+static void set_solver(SimpleGraph* g, SolverType type){
+    g->solver_type = type;
+}
+
+static void set_robust_kernel(SimpleGraph* g, RobustKerneltype type){
+    g->robust_kernel_type = type;
 }
 
 static int add_vertex_se2(SimpleGraph* g, float x, float y, float theta, int fixed) {

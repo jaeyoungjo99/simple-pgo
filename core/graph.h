@@ -19,6 +19,14 @@ typedef enum {
     SOLVER_SPARSE
 } SolverType;
 
+typedef enum{
+    ROBUST_KERNEL_NONE,
+    ROBUST_KERNEL_HUBER,
+    ROBUST_KERNEL_CAUCHY,
+    ROBUST_KERNEL_TUKEY,
+    ROBUST_KERNEL_GM
+} RobustKerneltype;
+
 typedef struct {
     VertexSE2 vertices[MAX_VERTICES];
     EdgeSE2 edges[MAX_EDGES];
@@ -27,11 +35,14 @@ typedef struct {
 
     OptimizerType optimizer_type;
     SolverType solver_type;
+    RobustKerneltype robust_kernel_type;
 
     float lambda; // Damping factor for Levenberg-Marquardt
+    float loss_threshold; // Loss threshold for robust loss function
 
     void (*setOptimizer)(struct SimpleGraph*, OptimizerType);
     void (*setSolver)(struct SimpleGraph*, SolverType);
+    void (*setRobustKernel)(struct SimpleGraph*, RobustKerneltype);
     int (*addVertex2D)(struct SimpleGraph*, float, float, float, int);
     int (*addEdge2D)(struct SimpleGraph*, int, int, float, float, float, float[3][3]);
 } SimpleGraph;
@@ -39,6 +50,7 @@ typedef struct {
 SimpleGraph *CreateGraph();
 static void set_optimizer(SimpleGraph* g, OptimizerType type);
 static void set_solver(SimpleGraph* g, SolverType type);
+static void set_robust_kernel(SimpleGraph* g, RobustKerneltype type);
 
 static int add_vertex_se2(SimpleGraph* g, float x, float y, float theta, int fixed);
 static int add_edge_se2(SimpleGraph* g, int from, int to, float dx, float dy, float dtheta, float info[3][3]);
