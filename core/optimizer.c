@@ -122,8 +122,7 @@ void optimize_graph(SimpleGraph* graph, int max_iterations) {
         if (graph->optimizer_type == OPTIMIZER_GAUSS_NEWTON) {
             // No damping for Gauss-Newton
         }
-        else {
-            // OPTIMIZER_LEVENBERG_MARQUARDT
+        else { // OPTIMIZER_LEVENBERG_MARQUARDT
             add_damping_to_hessian(H, dim, lambda);
         }
 
@@ -137,7 +136,6 @@ void optimize_graph(SimpleGraph* graph, int max_iterations) {
         }
 
         update_states(graph, dx);
-
         update_edge_errors(graph);
 
         curr_chi2 = robust_chi2_sum(graph); // opt 후 chi2 계산
@@ -179,6 +177,7 @@ static void update_states(SimpleGraph* graph, const float* dx) {
         v->y += dx[idx + 1];
         v->theta += dx[idx + 2];
 
+        // debug
         if(fabs(dx[idx]) < 1e-6f && fabs(dx[idx + 1]) < 1e-6f)
         {
             negative++;
@@ -217,7 +216,7 @@ float compute_robust_weight(SimpleGraph* graph, const float* e) {
             }
 
         case ROBUST_KERNEL_GM:  // Geman-McClure
-            return (delta * delta) / (delta * delta + norm * norm);
+            return (delta * delta) / pow(delta + norm * norm, 2);
 
         case ROBUST_KERNEL_NONE:
             return 1.0f;

@@ -28,13 +28,23 @@ void display_callback() {
     glPointSize(5.0f);
 
     glColor3f(1.0f, 1.0f, 1.0f);
-    glBegin(GL_POINTS);
+    // glBegin(GL_POINTS);
     for (int i = 0; i < g_graph->num_vertices; ++i) {
         VertexSE2* v = &g_graph->vertices[i];
-        glVertex2f(v->x, v->y);
+        // glVertex2f(v->x, v->y);
+        glLineWidth(4.0f);
+        glBegin(GL_LINES);
+        float len = 0.5f;  // 방향선 길이
+        float dx = len * cosf(v->theta);
+        float dy = len * sinf(v->theta);
+        glVertex2f(v->x, v->y);         // 시작점
+        glVertex2f(v->x + dx, v->y + dy);  // 끝점
+
+        glEnd();
     }
     glEnd();
 
+    glLineWidth(1.0f);
     glBegin(GL_LINES);
     for (int i = 0; i < g_graph->num_edges; ++i) {
         EdgeSE2* e = &g_graph->edges[i];
@@ -67,10 +77,6 @@ void reshape_callback(int width, int height) {
 
 // 🖱 마우스 클릭 시 프로그램 종료
 void mouse_callback(int button, int state, int x, int y) {
-    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-        printf("Mouse clicked — leaving main loop...\n");
-        glutLeaveMainLoop();  // 메인 루프 탈출
-    }
     if (button == GLUT_LEFT_BUTTON) {
         if (state == GLUT_DOWN) {
             is_dragging = 1;

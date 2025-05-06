@@ -21,10 +21,10 @@ typedef enum {
 
 typedef enum{
     ROBUST_KERNEL_NONE,
-    ROBUST_KERNEL_HUBER,
-    ROBUST_KERNEL_CAUCHY,
-    ROBUST_KERNEL_TUKEY,
-    ROBUST_KERNEL_GM
+    ROBUST_KERNEL_HUBER, // 범위 넘어가면 일정값 유지
+    ROBUST_KERNEL_CAUCHY, // 범위 밖에서 낮은 값
+    ROBUST_KERNEL_TUKEY, // 범위 밖에서 0
+    ROBUST_KERNEL_GM // 범위 밖에서 거의 0
 } RobustKerneltype;
 
 typedef struct {

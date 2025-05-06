@@ -14,7 +14,7 @@ SimpleGraph *CreateGraph()
     g->solver_type = SOLVER_DENSE;
     g->robust_kernel_type = ROBUST_KERNEL_NONE;
 
-    g->lambda = 1.0f; // Default damping factor for Levenberg-Marquardt
+    g->lambda = 0.5f; // Default damping factor for Levenberg-Marquardt
     g->loss_threshold = 5.0f; // Default loss threshold for robust loss function
 
     g->setOptimizer = set_optimizer;

@@ -9,6 +9,7 @@
         "optimizer.h": "c",
         "graph.h": "c",
         "random": "c",
-        "viewer.h": "c"
+        "viewer.h": "c",
+        "stdio.h": "c"
     }
 }

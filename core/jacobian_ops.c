@@ -1,15 +1,23 @@
 #include "jacobian_ops.h"
 
-void compute_edge_residual_se2(const VertexSE2* from, const VertexSE2* to, EdgeSE2* edge, float residual[3]) {
+void compute_edge_residual_se2(
+    const VertexSE2* from, const VertexSE2* to, 
+    EdgeSE2* edge, float residual[3]) {
     float dx = to->x - from->x;
     float dy = to->y - from->y;
     float dtheta = to->theta - from->theta;
 
-    float c = cosf(-from->theta);
-    float s = sinf(-from->theta);
+    // float c = cosf(-from->theta);
+    // float s = sinf(-from->theta);
 
-    float dx_local = c * dx - s * dy;
-    float dy_local = s * dx + c * dy;
+    // float dx_local = c * dx - s * dy;
+    // float dy_local = s * dx + c * dy;
+
+    float c = cosf(from->theta);
+    float s = sinf(from->theta);
+
+    float dx_local = c * dx + s * dy;
+    float dy_local = - s * dx + c * dy;
 
     residual[0] = dx_local - edge->measurement[0];
     residual[1] = dy_local - edge->measurement[1];
@@ -24,7 +32,9 @@ void compute_edge_residual_se2(const VertexSE2* from, const VertexSE2* to, EdgeS
     edge->error[2] = residual[2];
 }
 
-void compute_edge_jacobians_se2(const VertexSE2* from, const VertexSE2* to, const EdgeSE2* edge, float J_from[3][3], float J_to[3][3]) {
+void compute_edge_jacobians_se2(
+    const VertexSE2* from, const VertexSE2* to, 
+    const EdgeSE2* edge, float J_from[3][3], float J_to[3][3]) {
     float dx = to->x - from->x;
     float dy = to->y - from->y;
     float c = cosf(from->theta);
