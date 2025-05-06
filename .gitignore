@@ -1,0 +1,19 @@
+# Ignore build directory
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Backup or editor files
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Ignore compiled binaries
+*.out
+*.o
+*.a
+*.so
+*.exe
