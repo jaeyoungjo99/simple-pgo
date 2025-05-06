@@ -10,6 +10,9 @@ pkg_check_modules(GLFW REQUIRED glfw3)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
+    ${PROJECT_SOURCE_DIR}/types
+    ${PROJECT_SOURCE_DIR}/core
+    ${PROJECT_SOURCE_DIR}/visualization
     ${GLFW_INCLUDE_DIRS}
 )
 
@@ -22,6 +25,7 @@ target_link_libraries(simple_pgo
     core_lib
     types_lib
     vis_lib
+    m
     ${GLFW_LIBRARIES}
     ${OPENGL_LIBRARIES}
 )

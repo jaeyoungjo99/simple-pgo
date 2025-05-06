@@ -4,5 +4,11 @@
     ],
     "python.analysis.extraPaths": [
         "/opt/ros/noetic/lib/python3/dist-packages"
-    ]
+    ],
+    "files.associations": {
+        "optimizer.h": "c",
+        "graph.h": "c",
+        "random": "c",
+        "viewer.h": "c"
+    }
 }

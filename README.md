@@ -21,6 +21,9 @@ simple-pgo/
 │   ├── graph.c
 │   ├── graph.h
 │   ├── optimizer.c
+│   ├── optimizer.h
+│   ├── jacobian_ops.c
+│   ├── jacobian_ops.h
 │   └── CMakeLists.txt
 ├── types/
 │   ├── vertex_se2.c
@@ -35,6 +38,9 @@ simple-pgo/
 │       └── core_api.h
 ├── visualization/
 │   ├── viewer.c              # OpenGL based visualization code
+│   ├── viewer.h              # OpenGL based visualization code
+│   ├── g2o_parser.c
+│   ├── g2o_parser.h
 │   └── CMakeLists.txt
 ├── main.c                    # execution file
 └── data/                     # test data
